@@ -1,0 +1,22 @@
+{
+    "_note": "Extracted from official NGIT Student Campus Event Guidelines.",
+    "max_participants": 500,
+    "max_participants_source": "NGIT Guidelines - Venue capacity must not be exceeded",
+    "max_budget": 100000,
+    "max_budget_source": "NGIT Guidelines, Section 2: Budget & Financial Discipline (Max ₹1,00,000)",
+    "crowd_plan_required_above": 0,
+    "crowd_plan_source": "NGIT Guidelines, Section 6: Security and Crowd Management",
+    "safety_plan_source": "NGIT Guidelines, Section 5: Safety and Emergency Preparedness",
+    "refreshments_allowed": true,
+    "refreshments_source": "NGIT Guidelines, Section 3: Food and Refreshments (Beverages strictly prohibited)",
+    "crowd_plan_must_include": {
+        "crowd management": [
+            "crowd",
+            "volunteer",
+            "security",
+            "bouncer",
+            "orderly",
+            "control"
+        ]
+    }
+}

@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Event Assistant | Guideline Verification</title>
+  <style>
+    :root {
+      --navy: #14213d;
+      --blue: #3157d5;
+      --blue2: #eaf0ff;
+      --bg: #f5f7fb;
+      --ink: #182230;
+      --muted: #667085;
+      --line: #e4e8f0;
+      --green: #16834a;
+      --greenbg: #e8f7ee;
+      --amber: #9a6700;
+      --amberbg: #fff5d8;
+      --red: #b42318;
+      --redbg: #ffebe9;
+      --white: #fff;
+      --shadow: 0 10px 30px rgba(16, 24, 40, .06)
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink)
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit
+    }
+
+    button {
+      cursor: pointer
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 248px 1fr
+    }
+
+    .sidebar {
+      background: var(--navy);
+      color: #fff;
+      padding: 26px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 0 8px
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #fff;
+      color: var(--blue);
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+      font-weight: 800
+    }
+
+    .brand h1 {
+      font-size: 16px;
+      line-height: 1.2;
+      margin: 0
+    }
+
+    .brand small {
+      display: block;
+      color: #bdc8e1;
+      font-size: 11px;
+      margin-top: 5px
+    }
+
+    .nav-label {
+      font-size: 10px;
+      letter-spacing: 1.4px;
+      color: #98a7c7;
+      padding: 0 12px;
+      margin-bottom: 8px
+    }
+
+    .nav-item {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: #dce4f6;
+      text-align: left;
+      padding: 12px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 13px;
+      margin: 3px 0
+    }
+
+    .nav-item.active,
+    .nav-item:hover {
+      background: #26395f;
+      color: white
+    }
+
+    .nav-icon {
+      width: 19px;
+      text-align: center;
+      font-size: 17px
+    }
+
+    .sidebar-foot {
+      margin-top: auto;
+      padding: 14px 12px;
+      border-top: 1px solid #344566;
+      color: #b9c5df;
+      font-size: 11px;
+      line-height: 1.6
+    }
+
+    .main {
+      min-width: 0
+    }
+
+    .topbar {
+      height: 72px;
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 34px
+    }
+
+    .crumb {
+      font-size: 12px;
+      color: var(--muted)
+    }
+
+    .crumb b {
+      color: var(--ink)
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px
+    }
+
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #e3eaff;
+      color: #2445b5;
+      display: grid;
+      place-items: center;
+      font-weight: 700
+    }
+
+    .content {
+      max-width: 1300px;
+      margin: auto;
+      padding: 30px 34px 50px
+    }
+
+    .page-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 24px
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase
+    }
+
+    .page-head h2 {
+      font-size: 28px;
+      margin: 8px 0 7px;
+      letter-spacing: -.6px
+    }
+
+    .page-head p {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 0;
+      line-height: 1.6
+    }
+
+    .pill {
+      border-radius: 100px;
+      padding: 7px 11px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f1f3f8;
+      color: #5e6675;
+      white-space: nowrap
+    }
+
+    .pill.blue {
+      background: var(--blue2);
+      color: #2948b5
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 22px
+    }
+
+    .stat {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 17px 18px;
+      box-shadow: var(--shadow)
+    }
+
+    .stat-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 11px
+    }
+
+    .stat-icon {
+      font-size: 17px
+    }
+
+    .stat-num {
+      font-size: 27px;
+      font-weight: 750;
+      letter-spacing: -.7px;
+      margin: 9px 0 4px
+    }
+
+    .stat-note {
+      font-size: 11px;
+      color: var(--muted)
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(360px, .92fr);
+      gap: 20px;
+      align-items: start
+    }
+
+    .panel {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 20px
+    }
+
+    .panel-head {
+      padding: 19px 22px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px
+    }
+
+    .panel-head h3 {
+      margin: 0;
+      font-size: 15px
+    }
+
+    .panel-head p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 11px
+    }
+
+    .panel-body {
+      padding: 22px
+    }
+
+    .section-kicker {
+      font-size: 10px;
+      color: var(--blue);
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin: 0 0 14px
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      min-width: 0
+    }
+
+    .field.full {
+      grid-column: 1/-1
+    }
+
+    .field label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #344054
+    }
+
+    .required {
+      color: #d92d20
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1px solid #d6dce7;
+      border-radius: 9px;
+      padding: 11px 12px;
+      outline: none;
+      background: #fff;
+      color: var(--ink);
+      font-size: 12px;
+      transition: .15s
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 76px
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px #3157d51a
+    }
+
+    .hint {
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.4
+    }
+
+    .upload-box {
+      border: 1.5px dashed #c8d1e2;
+      border-radius: 11px;
+      padding: 17px;
+      text-align: center;
+      background: #fafbff
+    }
+
+    .upload-box input {
+      max-width: 100%;
+      font-size: 11px
+    }
+
+    .upload-box strong {
+      font-size: 12px;
+      display: block;
+      margin-bottom: 5px
+    }
+
+    .upload-box span {
+      font-size: 10px;
+      color: var(--muted)
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap
+    }
+
+    .btn {
+      border: 1px solid #d6dce7;
+      border-radius: 9px;
+      background: white;
+      color: #344054;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px
+    }
+
+    .btn.primary {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff
+    }
+
+    .btn.primary:hover {
+      background: #2446bf
+    }
+
+    .btn:disabled {
+      opacity: .45;
+      cursor: not-allowed
+    }
+
+    .btn.subtle {
+      background: #f7f8fc
+    }
+
+    .check-summary {
+      padding: 16px 18px;
+      background: #f8faff;
+      border: 1px solid #e4eaff;
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 17px
+    }
+
+    .check-summary strong {
+      font-size: 13px
+    }
+
+    .check-summary p {
+      font-size: 11px;
+      color: var(--muted);
+      margin: 5px 0 0
+    }
+
+    .summary-count {
+      text-align: right;
+      white-space: nowrap
+    }
+
+    .summary-count b {
+      font-size: 21px;
+      display: block
+    }
+
+    .summary-count span {
+      font-size: 10px;
+      color: var(--muted)
+    }
+
+    .progress {
+      height: 6px;
+      background: #e7ebf4;
+      border-radius: 99px;
+      overflow: hidden;
+      margin-top: 12px
+    }
+
+    .progress div {
+      height: 100%;
+      width: 0;
+      background: var(--blue);
+      transition: width .2s
+    }
+
+    .checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .check-row {
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      gap: 10px;
+      align-items: start
+    }
+
+    .status-icon {
+      width: 27px;
+      height: 27px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 13px
+    }
+
+    .status-icon.pass {
+      background: var(--greenbg);
+      color: var(--green)
+    }
+
+    .status-icon.fail {
+      background: var(--redbg);
+      color: var(--red)
+    }
+
+    .status-icon.pending {
+      background: var(--amberbg);
+      color: var(--amber)
+    }
+
+    .check-title {
+      font-size: 12px;
+      font-weight: 750;
+      margin: 1px 0 5px
+    }
+
+    .check-desc {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5
+    }
+
+    .check-evidence {
+      font-size: 10px;
+      color: #344054;
+      margin-top: 7px;
+      background: #f7f8fb;
+      padding: 7px 9px;
+      border-radius: 6px
+    }
+
+    .status-badge {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .3px;
+      text-transform: uppercase;
+      padding: 5px 7px;
+      border-radius: 6px;
+      white-space: nowrap
+    }
+
+    .status-badge.pass {
+      background: var(--greenbg);
+      color: var(--green)
+    }
+
+    .status-badge.fail {
+      background: var(--redbg);
+      color: var(--red)
+    }
+
+    .status-badge.pending {
+      background: var(--amberbg);
+      color: var(--amber)
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 35px 20px;
+      color: var(--muted)
+    }
+
+    .empty-state .big {
+      font-size: 30px;
+      margin-bottom: 10px
+    }
+
+    .empty-state h4 {
+      margin: 0 0 6px;
+      color: var(--ink);
+      font-size: 13px
+    }
+
+    .empty-state p {
+      font-size: 11px;
+      line-height: 1.5;
+      margin: 0
+    }
+
+    .result-box {
+      padding: 17px;
+      border-radius: 11px;
+      background: #f8faff;
+      border: 1px solid #e1e8ff
+    }
+
+    .result-box.ready {
+      background: #f0fbf4;
+      border-color: #c7ecd4
+    }
+
+    .result-box.blocked {
+      background: #fff8e7;
+      border-color: #f2dfaa
+    }
+
+    .result-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 800;
+      font-size: 13px
+    }
+
+    .result-box p {
+      font-size: 11px;
+      color: #596579;
+      line-height: 1.6;
+      margin: 9px 0 0
+    }
+
+    .pdf-actions {
+      margin-top: 13px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .footer-note {
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-top: 13px
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      max-width: 360px;
+      padding: 13px 16px;
+      background: #14213d;
+      color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 10px 35px #0002;
+      font-size: 12px;
+      display: none;
+      z-index: 20
+    }
+
+    .toast.show {
+      display: block
+    }
+
+    .backend-row {
+      display: flex;
+      gap: 8px;
+      align-items: center
+    }
+
+    .backend-row input {
+      flex: 1;
+      min-width: 0;
+      border: 1px solid #d6dce7;
+      border-radius: 8px;
+      padding: 9px;
+      font-size: 11px
+    }
+
+    .tiny {
+      font-size: 10px;
+      color: var(--muted)
+    }
+
+    @media(max-width:1050px) {
+      .app {
+        grid-template-columns: 210px 1fr
+      }
+
+      .layout {
+        grid-template-columns: 1fr
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    @media(max-width:700px) {
+      .app {
+        display: block
+      }
+
+      .sidebar {
+        display: none
+      }
+
+      .topbar {
+        padding: 0 18px;
+        height: 60px
+      }
+
+      .content {
+        padding: 22px 15px
+      }
+
+      .page-head {
+        display: block
+      }
+
+      .page-head .pill {
+        margin-top: 14px
+      }
+
+      .page-head h2 {
+        font-size: 24px
+      }
+
+      .stats {
+        gap: 9px
+      }
+
+      .stat {
+        padding: 13px
+      }
+
+      .stat-num {
+        font-size: 23px
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr
+      }
+
+      .field.full {
+        grid-column: auto
+      }
+
+      .panel-body {
+        padding: 16px
+      }
+
+      .panel-head {
+        padding: 16px
+      }
+
+      .check-row {
+        grid-template-columns: 25px 1fr
+      }
+
+      .status-badge {
+        grid-column: 2;
+        justify-self: start
+      }
+
+      .check-summary {
+        align-items: flex-start
+      }
+
+      .topbar .crumb {
+        max-width: 65%;
+        line-height: 1.4
+      }
+    }
+
+    @media print {
+
+      .sidebar,
+      .topbar,
+      .page-head .pill,
+      .actions,
+      .btn,
+      .upload-box,
+      .footer-note,
+      .backend-settings {
+        display: none !important
+      }
+
+      body {
+        background: #fff
+      }
+
+      .app {
+        display: block
+      }
+
+      .content {
+        padding: 0;
+        max-width: none
+      }
+
+      .panel,
+      .stat {
+        box-shadow: none;
+        break-inside: avoid
+      }
+
+      .layout {
+        grid-template-columns: 1fr
+      }
+
+      .stats {
+        grid-template-columns: repeat(4, 1fr)
+      }
+    }
+
+    .page {
+      display: none
+    }
+
+    .page.active {
+      display: block
+    }
+
+    .ev-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap
+    }
+
+    .ev-card h4 {
+      margin: 0 0 4px;
+      font-size: 13px
+    }
+
+    .ev-btns {
+      display: flex;
+      gap: 8px
+    }
+
+    .badge {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 9px;
+      border-radius: 99px;
+      background: var(--amberbg);
+      color: var(--amber)
+    }
+
+    .badge.verified {
+      background: var(--greenbg);
+      color: var(--green)
+    }
+
+    .badge.needs-work {
+      background: var(--redbg);
+      color: var(--red)
+    }
+
+    .chat-msgs {
+      height: 430px;
+      overflow: auto;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #fbfcff
+    }
+
+    .msg {
+      display: flex;
+      gap: 9px;
+      max-width: 90%
+    }
+
+    .msg.me {
+      align-self: flex-end;
+      flex-direction: row-reverse
+    }
+
+    .msg i {
+      font-style: normal;
+      flex: 0 0 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--blue2);
+      color: var(--blue);
+      display: grid;
+      place-items: center;
+      font-size: 10px;
+      font-weight: 800
+    }
+
+    .msg.me i {
+      background: var(--greenbg);
+      color: var(--green)
+    }
+
+    .msg p {
+      margin: 0;
+      background: #f1f4f9;
+      padding: 10px 13px;
+      border-radius: 4px 12px 12px 12px;
+      font-size: 12px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere
+    }
+
+    .msg.me p {
+      background: var(--blue2);
+      border-radius: 12px 4px 12px 12px
+    }
+
+    .chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 10px
+    }
+
+    .chips button {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 99px;
+      padding: 6px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #40516a
+    }
+
+    .composer {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end
+    }
+
+    .composer textarea {
+      flex: 1;
+      min-width: 0;
+      border: 1px solid #d6dce7;
+      border-radius: 9px;
+      padding: 10px;
+      font-size: 12px;
+      resize: vertical;
+      min-height: 42px;
+      max-height: 110px;
+      outline: none
+    }
+
+    .composer textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px #3157d51a
+    }
+
+    @media(max-width:700px) {
+      .sidebar {
+        display: flex !important;
+        flex-direction: row;
+        gap: 4px;
+        padding: 8px;
+        overflow-x: auto
+      }
+
+      .sidebar .brand,
+      .sidebar .nav-label,
+      .sidebar-foot,
+      .desk-only {
+        display: none
+      }
+
+      .sidebar>div {
+        display: flex
+      }
+
+      .nav-item {
+        width: auto;
+        white-space: nowrap;
+        margin: 0;
+        padding: 9px 11px
+      }
+    }
+
+    @media print {
+      .page:not(#page-verify) {
+        display: none !important
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">✓</div>
+        <div>
+          <h1>Campus Event<br>Assistant</h1><small>NGIT · Event Compliance</small>
+        </div>
+      </div>
+      <div>
+        <div class="nav-label">PAGES</div>
+        <button class="nav-item active" data-page="overview"><span class="nav-icon">▦</span>Overview</button>
+        <button class="nav-item" data-page="verify"><span class="nav-icon">✓</span>Verification</button>
+        <button class="nav-item" data-page="add"><span class="nav-icon">＋</span>Add Event</button>
+        <button class="nav-item" data-page="events"><span class="nav-icon">▦</span>My Events</button>
+        <button class="nav-item" data-page="chat"><span class="nav-icon">✧</span>AI Assistant</button>
+      </div>
+      <div class="desk-only">
+        <div class="nav-label">VERIFICATION</div>
+        <button class="nav-item" data-scroll="event-form"><span class="nav-icon">✎</span>Event Planning</button>
+        <button class="nav-item" data-scroll="checklist-panel"><span class="nav-icon">☑</span>Guideline
+          Checklist</button>
+        <button class="nav-item" data-scroll="pdf-panel"><span class="nav-icon">▤</span>Proposal Letter</button>
+      </div>
+      <div class="sidebar-foot">Guideline verification workspace<br><span>Review all mandatory requirements before
+          approval.</span></div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="crumb">Workspace&nbsp; / &nbsp;<b id="crumb-title">Overview</b></div>
+        <div class="profile">
+          <div class="avatar">SC</div>
+          <div><b>Student Coordinator</b>
+            <div class="tiny">Planning portal</div>
+          </div>
+        </div>
+      </header>
+      <div class="content page active" id="page-overview">
+        <section id="overview" class="page-head">
+          <div>
+            <div class="eyebrow">Campus operations · NGIT</div>
+            <h2>Event Guideline Verification</h2>
+            <p>Submit your event plan, verify it against official guidelines, and generate a PDF proposal when every
+              mandatory check passes.</p>
+          </div><span class="pill blue">● Verification workspace</span>
+        </section>
+        <section class="stats">
+          <div class="stat">
+            <div class="stat-top">Submitted fields <span class="stat-icon">▤</span></div>
+            <div class="stat-num" id="stat-fields">0</div>
+            <div class="stat-note">Planning details completed</div>
+          </div>
+          <div class="stat">
+            <div class="stat-top">Guidelines checked <span class="stat-icon">⌕</span></div>
+            <div class="stat-num" id="stat-checked">0</div>
+            <div class="stat-note">Requirements evaluated</div>
+          </div>
+          <div class="stat">
+            <div class="stat-top">Approved <span class="stat-icon">✓</span></div>
+            <div class="stat-num" id="stat-approved">0</div>
+            <div class="stat-note">Requirements passed</div>
+          </div>
+          <div class="stat">
+            <div class="stat-top">Need attention <span class="stat-icon">!</span></div>
+            <div class="stat-num" id="stat-attention">0</div>
+            <div class="stat-note">Failed or unclear checks</div>
+          </div>
+        </section>
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>Get started</h3>
+              <p>Plan an event, then check it against the guidelines.</p>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="actions" style="justify-content:flex-start;margin:0"><button class="btn primary"
+                data-page="add">＋ Add event</button><button class="btn" data-page="events">My events</button><button
+                class="btn" data-page="verify">Verify an event</button><button class="btn" data-page="chat">Ask the AI
+                assistant</button></div>
+          </div>
+        </section>
+      </div>
+      <div class="content page" id="page-verify">
+        <section class="page-head">
+          <div>
+            <div class="eyebrow">Compliance</div>
+            <h2>Event guideline verification</h2>
+            <p>Check your event plan against the guidelines and download a PDF proposal when every check passes.</p>
+          </div>
+        </section>
+        <div class="layout">
+          <div>
+            <section class="panel" id="event-form">
+              <div class="panel-head">
+                <div>
+                  <h3>01 · Event planning details</h3>
+                  <p>Enter the proposal information for verification.</p>
+                </div><span class="pill">Required fields marked *</span>
+              </div>
+              <div class="panel-body">
+                <form id="planning-form" novalidate>
+                  <p class="section-kicker">Basic information</p>
+                  <div class="form-grid">
+                    <div class="field full"><label for="eventName">Event name <span
+                          class="required">*</span></label><input id="eventName" name="eventName"
+                        placeholder="e.g. Annual Technical Symposium" required /></div>
+                    <div class="field"><label for="eventType">Event category <span
+                          class="required">*</span></label><select id="eventType" name="eventType" required>
+                        <option value="">Select category</option>
+                        <option>Technical</option>
+                        <option>Cultural</option>
+                        <option>Sports</option>
+                        <option>Workshop</option>
+                        <option>Seminar / Guest Lecture</option>
+                        <option>Club Activity</option>
+                        <option>Other</option>
+                      </select></div>
+                    <div class="field"><label for="organizer">Club / department <span
+                          class="required">*</span></label><input id="organizer" name="organizer"
+                        placeholder="e.g. CSE Student Chapter" required /></div>
+                    <div class="field"><label for="coordinator">Student coordinator <span
+                          class="required">*</span></label><input id="coordinator" name="coordinator"
+                        placeholder="Full name" required /></div>
+                    <div class="field"><label for="faculty">Faculty coordinator <span
+                          class="required">*</span></label><input id="faculty" name="faculty" placeholder="Faculty name"
+                        required /></div>
+                    <div class="field"><label for="eventDate">Proposed date <span
+                          class="required">*</span></label><input id="eventDate" name="eventDate" type="date"
+                        required /></div>
+                    <div class="field"><label for="startTime">Start time <span class="required">*</span></label><input
+                        id="startTime" name="startTime" type="time" required /></div>
+                    <div class="field"><label for="endTime">End time <span class="required">*</span></label><input
+                        id="endTime" name="endTime" type="time" required /></div>
+                    <div class="field"><label for="venue">Venue <span class="required">*</span></label><input id="venue"
+                        name="venue" placeholder="Auditorium / classroom / lab" required /></div>
+                    <div class="field"><label for="participants">Expected participants <span
+                          class="required">*</span></label><input id="participants" name="participants" type="number"
+                        min="1" placeholder="e.g. 150" required /></div>
+                  </div>
+                  <p class="section-kicker" style="margin-top:24px">Budget and facilities</p>
+                  <div class="form-grid">
+                    <div class="field"><label for="budget">Total estimated budget (₹) <span
+                          class="required">*</span></label><input id="budget" name="budget" type="number" min="0"
+                        step="1" placeholder="e.g. 25000" required /></div>
+                    <div class="field"><label for="funding">Funding source</label><select id="funding" name="funding">
+                        <option value="">Select source</option>
+                        <option>Department / college</option>
+                        <option>Club funds</option>
+                        <option>Sponsorship</option>
+                        <option>Registration fees</option>
+                        <option>Mixed sources</option>
+                        <option>Other</option>
+                      </select></div>
+                    <div class="field"><label for="refreshments">Refreshments planned?</label><select id="refreshments"
+                        name="refreshments">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                      </select></div>
+                    <div class="field"><label for="externalGuests">External guests / speakers?</label><select
+                        id="externalGuests" name="externalGuests">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                      </select></div>
+                    <div class="field"><label for="equipment">Equipment / AV required</label><input id="equipment"
+                        name="equipment" placeholder="Projector, microphones, sound system" /></div>
+
+                    <div class="field full"><label for="safety">Safety, crowd management and accessibility
+                        plan</label><textarea id="safety" name="safety"
+                        placeholder="Describe arrangements, volunteers, first aid, accessibility, crowd control..."></textarea>
+                    </div>
+                    <div class="field full"><label for="additional">Additional notes</label><textarea id="additional"
+                        name="additional"
+                        placeholder="Other event details, setup requirements, sponsor details, etc."></textarea></div>
+                  </div>
+                  <div class="actions"><button type="reset" class="btn subtle" id="reset-form">Clear
+                      form</button><button type="button" id="verify-btn" class="btn primary">Verify against guidelines
+                      <span>→</span></button></div>
+                </form>
+              </div>
+            </section>
+            <input type="hidden" id="apiBase" value="http://localhost:5000" /><span id="api-state" hidden>Demo
+              mode</span>
+          </div>
+          <div>
+            <section class="panel" id="checklist-panel">
+              <div class="panel-head">
+                <div>
+                  <h3>02 · Guideline checklist</h3>
+                  <p>Each requirement is shown with its result and evidence.</p>
+                </div><span class="pill" id="check-status">Not checked</span>
+              </div>
+              <div class="panel-body">
+                <div class="check-summary">
+                  <div><strong id="summary-heading">Ready for verification</strong>
+                    <p id="summary-copy">Complete the event planning form to start.</p>
+                    <div class="progress">
+                      <div id="progress-bar"></div>
+                    </div>
+                  </div>
+                  <div class="summary-count"><b id="check-count">0/0</b><span>checks passed</span></div>
+                </div>
+                <div id="checklist" class="checklist">
+                  <div class="empty-state">
+                    <div class="big">☑</div>
+                    <h4>No verification results yet</h4>
+                    <p>Submit your event plan to compare its details against the guideline rules configured in your
+                      backend.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="panel" id="pdf-panel">
+              <div class="panel-head">
+                <div>
+                  <h3>03 · Proposal letter</h3>
+                  <p>Download the letter after all checks pass.</p>
+                </div><span class="pill" id="pdf-state">Locked</span>
+              </div>
+              <div class="panel-body">
+                <div class="result-box blocked" id="pdf-result">
+                  <div class="result-title"><span>🔒</span><span id="pdf-title">Proposal letter is locked</span></div>
+                  <p id="pdf-copy">Run the guideline verification first. The proposal letter becomes available only when
+                    every mandatory requirement is approved.</p>
+                </div>
+                <div class="pdf-actions"><button class="btn primary" id="download-pdf" disabled>⇩ Download proposal
+                    letter (PDF)</button><button class="btn" id="print-report" disabled>Print checklist</button></div>
+                <div class="footer-note">The PDF is a proposal letter to the Principal with your event details and
+                  signature blocks for the student coordinator, faculty coordinator and Principal.</div>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Guideline documents</h3>
+                  <p>Official policy documents loaded on the backend.</p>
+                </div><span class="pill blue" id="doc-count-badge">0 documents</span>
+              </div>
+              <div class="panel-body">
+                <div class="upload-box" id="upload-box">
+                  <strong>＋ Add guideline documents</strong>
+                  <span>Upload official policy documents (PDF, DOCX, TXT) to verify events against official rules.</span>
+                  <br><br>
+                  <input id="guideline-files" type="file" accept=".pdf,.doc,.docx,.txt,.md" multiple />
+                </div>
+                <div id="file-list" style="margin-top:14px"></div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div class="content page" id="page-add">
+        <section class="page-head">
+          <div>
+            <div class="eyebrow">Event planning</div>
+            <h2>Add event</h2>
+            <p>Save an event brief to My Events, then verify it against the guidelines.</p>
+          </div>
+        </section>
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>Event brief</h3>
+              <p>Required fields marked *</p>
+            </div>
+          </div>
+          <div class="panel-body">
+            <form id="add-form">
+              <div class="form-grid">
+                <div class="field full"><label for="ae-eventName">Event name <span class=required>*</span></label><input
+                    id="ae-eventName" name="eventName" type="text" placeholder="e.g. Annual Technical Symposium"
+                    required /></div>
+                <div class="field"><label for="ae-eventType">Event category <span
+                      class="required">*</span></label><select id="ae-eventType" name="eventType" required>
+                    <option value="">Select category</option>
+                    <option>Technical</option>
+                    <option>Cultural</option>
+                    <option>Sports</option>
+                    <option>Workshop</option>
+                    <option>Seminar / Guest Lecture</option>
+                    <option>Club Activity</option>
+                    <option>Other</option>
+                  </select></div>
+                <div class="field"><label for="ae-organizer">Club / department <span
+                      class=required>*</span></label><input id="ae-organizer" name="organizer" type="text"
+                    placeholder="e.g. CSE Student Chapter" required /></div>
+                <div class="field"><label for="ae-coordinator">Student coordinator <span
+                      class=required>*</span></label><input id="ae-coordinator" name="coordinator" type="text"
+                    placeholder="Full name" required /></div>
+                <div class="field"><label for="ae-faculty">Faculty coordinator <span
+                      class=required>*</span></label><input id="ae-faculty" name="faculty" type="text"
+                    placeholder="Faculty name" required /></div>
+                <div class="field"><label for="ae-eventDate">Proposed date <span class=required>*</span></label><input
+                    id="ae-eventDate" name="eventDate" type="date" placeholder="" required /></div>
+                <div class="field"><label for="ae-startTime">Start time <span class=required>*</span></label><input
+                    id="ae-startTime" name="startTime" type="time" placeholder="" required /></div>
+                <div class="field"><label for="ae-endTime">End time <span class=required>*</span></label><input
+                    id="ae-endTime" name="endTime" type="time" placeholder="" required /></div>
+                <div class="field"><label for="ae-venue">Venue <span class=required>*</span></label><input id="ae-venue"
+                    name="venue" type="text" placeholder="Auditorium / classroom / lab" required /></div>
+                <div class="field"><label for="ae-participants">Expected participants <span
+                      class=required>*</span></label><input id="ae-participants" name="participants" type="number"
+                    placeholder="e.g. 150" required min="1" /></div>
+                <div class="field"><label for="ae-budget">Estimated budget (₹) <span
+                      class=required>*</span></label><input id="ae-budget" name="budget" type="number"
+                    placeholder="e.g. 25000" required min="0" /></div>
+                <div class="field full"><label for="ae-description">Description</label><textarea id="ae-description"
+                    name="description" placeholder="Purpose, audience and schedule"></textarea></div>
+              </div>
+              <div class="actions"><button type="reset" class="btn subtle">Clear form</button><button type="button"
+                  id="save-event" class="btn primary">Save event</button></div>
+            </form>
+          </div>
+        </section>
+      </div>
+      <div class="content page" id="page-events">
+        <section class="page-head">
+          <div>
+            <div class="eyebrow">Saved briefs</div>
+            <h2>My events</h2>
+            <p>Verify a saved event against the guidelines or remove it.</p>
+          </div><button class="btn primary" data-page="add">＋ Add event</button>
+        </section>
+        <section class="panel">
+          <div class="panel-body" id="event-list"></div>
+        </section>
+      </div>
+      <div class="content page" id="page-chat">
+        <section class="page-head">
+          <div>
+            <div class="eyebrow">Planning help</div>
+            <h2>AI assistant</h2>
+            <p>Ask about event preparation, approvals and missing details.</p>
+          </div>
+        </section>
+        <section class="panel">
+          <div class="chat-msgs" id="chat-msgs">
+            <div class="msg"><i>AI</i>
+              <p>Hello! I can help you plan a campus event. Ask me what to prepare, or what to check before
+                verification.</p>
+            </div>
+          </div>
+          <div class="panel-body" style="border-top:1px solid var(--line)">
+            <div class="chips"><button data-q="What information should I prepare for a campus event?">Event
+                requirements</button><button data-q="What should I check before choosing a venue?">Venue
+                planning</button><button data-q="What approvals might I need?">Approvals</button></div>
+            <form class="composer" id="chat-form"><textarea id="chat-input"
+                placeholder="Ask a question about your event..." required rows="1"></textarea><button
+                class="btn primary" type="button" id="chat-send">Send</button></form>
+            <div class="footer-note">Replies in demo mode are generic suggestions, not official NGIT rules. Connect the
+              backend (/api/chat) for guideline-based answers.</div>
+          </div>
+        </section>
+      </div>
+
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+    const $ = id => document.getElementById(id);
+    let latestEvent = null, latestResults = [], verificationPassed = false;
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const rules = [
+      { id: 'details', title: 'Event details', desc: 'Event name, category, club and student coordinator must be provided.', check: d => { const miss = [['eventName', 'event name'], ['eventType', 'category'], ['organizer', 'club / department'], ['coordinator', 'student coordinator']].filter(([k]) => !String(d[k] || '').trim()).map(x => x[1]); return miss.length ? { status: 'pending', reason: 'Missing: ' + miss.join(', ') + '.' } : { status: 'pass', reason: 'Event name, category, club and student coordinator are provided.' }; }, source: 'Basic details · Demo rule' },
+      { id: 'date', title: 'Event date and schedule', desc: 'Proposed date and timing should be valid and end after the start time.', check: d => { if (!d.eventDate || !d.startTime || !d.endTime) return { status: 'pending', reason: 'Date or time details are missing.' }; if (d.endTime <= d.startTime) return { status: 'fail', reason: 'End time must be later than the start time.' }; return { status: 'pass', reason: 'Date and time values are present and the time range is valid.' }; }, source: 'Basic schedule validation · Demo rule' },
+      { id: 'budget', title: 'Budget completeness', desc: 'A non-negative estimated budget must be provided. Actual budget limits must come from official guidelines.', check: d => { if (d.budget === '' || d.budget === null) return { status: 'pending', reason: 'Estimated budget has not been provided.' }; if (Number(d.budget) < 0) return { status: 'fail', reason: 'Budget cannot be negative.' }; return { status: 'pass', reason: 'An estimated budget has been provided. Official budget cap still needs backend guideline validation.' }; }, source: 'Budget field validation · Demo rule' },
+      { id: 'participants', title: 'Participant count', desc: 'Expected attendance should be a positive number; venue capacity needs official rule validation.', check: d => { if (!d.participants) return { status: 'pending', reason: 'Expected participant count is missing.' }; if (Number(d.participants) < 1) return { status: 'fail', reason: 'Participant count must be at least one.' }; return { status: 'pass', reason: 'Expected attendance is a positive number. Venue capacity should be verified against official rules.' }; }, source: 'Attendance field validation · Demo rule' },
+      { id: 'faculty', title: 'Faculty coordinator', desc: 'A faculty coordinator should be identified for the event.', check: d => d.faculty?.trim() ? { status: 'pass', reason: 'Faculty coordinator details have been provided.' } : { status: 'pending', reason: 'Faculty coordinator details are missing.' }, source: 'Coordinator details · Demo rule' },
+      { id: 'venue', title: 'Venue and facilities', desc: 'A venue must be specified; booking approval may be required by policy.', check: d => d.venue?.trim() ? { status: 'pass', reason: 'Venue has been specified. Venue availability and approval need official confirmation.' } : { status: 'pending', reason: 'Venue has not been specified.' }, source: 'Venue field validation · Demo rule' },
+      { id: 'safety', title: 'Safety and crowd management', desc: 'Safety arrangements should be described and checked against official requirements.', check: d => d.safety?.trim() ? { status: 'pass', reason: 'A safety plan description has been provided; content still requires policy review.' } : { status: 'pending', reason: 'No safety plan details provided. Confirm whether a plan is required for this event.' }, source: 'Safety plan field · Demo rule' }
+    ];
+    function collectForm() { const f = $('planning-form'); const obj = {}; new FormData(f).forEach((v, k) => obj[k] = v); return obj }
+    function fieldCount(d) { return Object.entries(d).filter(([k, v]) => String(v ?? '').trim() !== '' && !['additional', 'equipment', 'safety'].includes(k)).length }
+    function toast(msg) { $('toast').textContent = msg; $('toast').classList.add('show'); setTimeout(() => $('toast').classList.remove('show'), 3500) }
+    function statusText(s) { return s === 'pass' ? 'Approved' : s === 'fail' ? 'Rejected' : 'Needs review' }
+    function renderResults(results) {
+      latestResults = results; const total = results.length, passed = results.filter(r => r.status === 'pass').length, fail = results.filter(r => r.status === 'fail').length, pending = results.filter(r => r.status === 'pending').length;
+      const attention = fail + pending; verificationPassed = total > 0 && passed === total;
+      $('stat-checked').textContent = total; $('stat-approved').textContent = passed; $('stat-attention').textContent = attention; $('check-count').textContent = `${passed}/${total}`; $('progress-bar').style.width = (total ? passed / total * 100 : 0) + '%';
+      $('check-status').textContent = verificationPassed ? 'All passed' : fail ? 'Issues found' : 'Review required'; $('check-status').className = 'pill ' + (verificationPassed ? '' : '');
+      $('summary-heading').textContent = verificationPassed ? 'All configured checks passed' : fail ? 'Some requirements failed' : 'Verification needs attention';
+      $('summary-copy').textContent = verificationPassed ? 'Every returned check is approved. You can generate the event proposal PDF.' : `${passed} approved · ${fail} rejected · ${pending} need review. Resolve all non-approved items before PDF generation.`;
+      $('checklist').innerHTML = results.map(r => `<div class="check-row"><div class="status-icon ${r.status}">${r.status === 'pass' ? '✓' : r.status === 'fail' ? '×' : '!'}</div><div><div class="check-title">${esc(r.title)}</div><div class="check-desc">${esc(r.reason || r.description || 'No explanation provided.')}</div>${r.source ? `<div class="check-evidence">Reference: ${esc(r.source)}</div>` : ''}</div><span class="status-badge ${r.status}">${statusText(r.status)}</span></div>`).join('') || '<div class="empty-state">No rules returned by the backend.</div>';
+      $('pdf-state').textContent = verificationPassed ? 'Ready' : 'Locked'; $('download-pdf').disabled = !verificationPassed; $('print-report').disabled = !results.length;
+      $('pdf-result').className = 'result-box ' + (verificationPassed ? 'ready' : 'blocked'); $('pdf-title').textContent = verificationPassed ? 'Proposal letter is ready' : 'Proposal letter is locked';
+      $('pdf-copy').textContent = verificationPassed ? 'All configured checks passed. Download a proposal letter addressed to the Principal with your event details.' : 'The letter unlocks only when every returned check is approved. Missing, rejected, or unclear requirements must be resolved first.';
+    }
+    function runDemo(d) {
+      return rules.map(rule => { const r = rule.check(d); return { id: rule.id, title: rule.title, status: r.status, reason: r.reason, source: rule.source }; });
+    }
+    async function runVerify() {
+      const d = collectForm(); latestEvent = d; $('stat-fields').textContent = fieldCount(d); $('check-status').textContent = 'Checking…'; $('summary-heading').textContent = 'Verification in progress'; $('summary-copy').textContent = 'Checking submitted event details against the configured rules.';
+      const sb = $('verify-btn'); sb.disabled = true; sb.firstChild.textContent = 'Verifying… '; let why = '', results = null; const ac = new AbortController(), tm = setTimeout(() => ac.abort(), 15000); const base = $('apiBase').value.trim().replace(/\/+$/, '');
+      try {
+        const response = await fetch(base + '/api/verify-event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d), signal: ac.signal });
+        if (!response.ok) why = 'The backend answered with HTTP ' + response.status + '.';
+        if (response.ok) { const data = await response.json(); const raw = Array.isArray(data) ? data : (data.checklist || data.results || data.checks); if (Array.isArray(raw)) { results = raw.map((r, i) => ({ id: r.id || String(i), title: r.title || r.rule || r.name || `Guideline ${i + 1}`, status: normalizeStatus(r.status || r.result || r.verdict), reason: r.reason || r.explanation || r.message || '', source: r.source || r.reference || r.document_section || '' })); $('api-state').textContent = '● Connected'; $('api-state').className = 'pill blue'; } }
+      } catch (err) { if (err.name === 'AbortError') why = 'The backend did not respond within 15 seconds.' }
+      clearTimeout(tm); sb.disabled = false; sb.firstChild.textContent = 'Verify against guidelines ';
+      if (!results) { results = runDemo(d); $('api-state').textContent = '● Demo mode'; $('api-state').className = 'pill'; toast((why || 'Backend unavailable or endpoint not found.') + ' Demo validation rules were used.'); }
+      renderResults(results); $('checklist-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    $('verify-btn').addEventListener('click', runVerify);
+    $('planning-form').addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.tagName === 'INPUT') { e.preventDefault(); runVerify() } });
+    function normalizeStatus(s) { s = String(s || 'pending').toLowerCase(); if (['pass', 'passed', 'approved', 'ok', 'compliant', 'success'].includes(s)) return 'pass'; if (['fail', 'failed', 'rejected', 'non-compliant', 'noncompliant', 'error'].includes(s)) return 'fail'; return 'pending' }
+    $('reset-form').addEventListener('click', () => { setTimeout(() => { $('stat-fields').textContent = '0'; $('stat-checked').textContent = '0'; $('stat-approved').textContent = '0'; $('stat-attention').textContent = '0'; latestEvent = null; latestResults = []; verificationPassed = false; $('checklist').innerHTML = '<div class="empty-state"><div class="big">☑</div><h4>No verification results yet</h4><p>Submit your event plan to compare its details against the guideline rules configured in your backend.</p></div>'; $('check-status').textContent = 'Not checked'; $('check-count').textContent = '0/0'; $('progress-bar').style.width = '0%'; $('pdf-state').textContent = 'Locked'; $('download-pdf').disabled = true; $('print-report').disabled = true; $('pdf-result').className = 'result-box blocked'; $('pdf-title').textContent = 'Proposal letter is locked'; $('pdf-copy').textContent = 'Run the guideline verification first. The proposal letter becomes available only when every mandatory requirement is approved.'; }, 0) });
+    function pdfEscape(s) { return String(s ?? '').replace(/[^\x20-\x7E]/g, ' ').replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)') }
+    function createSimplePdf(items) {
+      const W = 595, H = 842, M = 46, pages = [[]]; let y = H - M, lastY = y;
+      items.forEach(it => {
+        const o = typeof it === 'string' ? { t: it } : it;
+        if (o.rule) { pages[pages.length - 1].push({ rule: true, y: y + 4 }); y -= 14; return }
+        const size = o.s || 10.5, lh = Math.round(size * 1.42), max = Math.floor(92 * 10.5 / size), txt = String(o.t ?? '');
+        const parts = txt.length ? (txt.match(new RegExp('.{1,' + max + '}(?:\\s|$)|.{1,' + max + '}', 'g')) || [txt]) : [''];
+        parts.forEach(q => { if (!o.back && y < M + lh) { pages.push([]); y = H - M } const t = q.trimEnd(); pages[pages.length - 1].push({ t, y: o.back ? lastY : y, size, b: !!o.b, x: o.x != null ? o.x : o.c ? Math.max(M, (W - t.length * size * .55) / 2) : M + (o.i || 0) }); if (!o.back) { lastY = y; y -= lh } })
+      });
+      const objs = []; const add = o => { objs.push(o); return objs.length };
+      const cat = add(''), pgs = add(''), f1 = add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>'), f2 = add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>'), ids = [];
+      pages.forEach(pg => {
+        let st = ''; pg.forEach(l => { st += l.rule ? `0.6 w ${M} ${l.y} m ${W - M} ${l.y} l S\n` : `BT /F${l.b ? 2 : 1} ${l.size} Tf 1 0 0 1 ${l.x} ${l.y} Tm (${pdfEscape(l.t)}) Tj ET\n` });
+        const c = add(`<< /Length ${st.length} >>\nstream\n${st}endstream`); ids.push(add(`<< /Type /Page /Parent ${pgs} 0 R /MediaBox [0 0 ${W} ${H}] /Resources << /Font << /F1 ${f1} 0 R /F2 ${f2} 0 R >> >> /Contents ${c} 0 R >>`))
+      });
+      objs[cat - 1] = `<< /Type /Catalog /Pages ${pgs} 0 R >>`; objs[pgs - 1] = `<< /Type /Pages /Kids [${ids.map(i => i + ' 0 R').join(' ')}] /Count ${ids.length} >>`;
+      let pdf = '%PDF-1.4\n', off = [0]; objs.forEach((o, i) => { off.push(pdf.length); pdf += `${i + 1} 0 obj\n${o}\nendobj\n` }); const xr = pdf.length;
+      pdf += `xref\n0 ${objs.length + 1}\n0000000000 65535 f \n`; for (let i = 1; i < off.length; i++)pdf += String(off[i]).padStart(10, '0') + ' 00000 n \n';
+      pdf += `trailer\n<< /Size ${objs.length + 1} /Root ${cat} 0 R >>\nstartxref\n${xr}\n%%EOF`; return new Blob([pdf], { type: 'application/pdf' });
+    }
+    function buildLetter(d, results) {
+      const fmtDate = v => { if (!v) return ''; const x = new Date(v + 'T00:00:00'); return isNaN(x) ? v : x.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) };
+      const t12 = v => { if (!v) return ''; const [h, m] = v.split(':').map(Number); return ((h % 12) || 12) + ':' + String(m).padStart(2, '0') + ' ' + (h < 12 ? 'AM' : 'PM') };
+      const cat = (d.eventType || '').toLowerCase(), L = [];
+      const para = t => { L.push(t, '') };
+      L.push({ t: 'NEIL GOGTE INSTITUTE OF TECHNOLOGY (NGIT)', s: 15, b: true, c: true }, { t: 'Event Proposal Letter', s: 11, c: true }, { rule: true },
+        'Date: ' + new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+        'To,', 'The Principal,', 'Neil Gogte Institute of Technology', 'Through: ' + d.faculty + ', Faculty Coordinator', '',
+        'From,', d.coordinator + ', Student Coordinator', d.organizer, '',
+        { t: 'Subject: Request for permission to conduct "' + d.eventName + '"', b: true }, '',
+        'Respected Sir/Madam,', '');
+      para('I, ' + d.coordinator + ', on behalf of ' + d.organizer + ', humbly request your permission to organize the ' + (cat ? cat + ' event ' : 'event ') + '"' + d.eventName + '" on ' + fmtDate(d.eventDate) + ' from ' + t12(d.startTime) + ' to ' + t12(d.endTime) + ' at ' + d.venue + '. The event is expected to be attended by about ' + d.participants + ' participants.');
+      L.push({ t: 'Event details', b: true });
+      [['Category', d.eventType], ['Date', fmtDate(d.eventDate)], ['Time', t12(d.startTime) + ' to ' + t12(d.endTime)], ['Venue', d.venue], ['Expected participants', d.participants], ['Estimated budget', 'Rs. ' + d.budget + (d.funding ? ' (' + d.funding + ')' : '')]].forEach(([k, v]) => L.push({ t: k + ': ' + v, i: 14 }));
+      L.push('');
+      const extra = []; if (d.refreshments === 'Yes') extra.push('Refreshments will be arranged.'); if (d.externalGuests === 'Yes') extra.push('External guests or speakers will be invited.'); if (d.equipment) extra.push('Equipment required: ' + d.equipment + '.');
+      if (extra.length) para(extra.join(' '));
+      if (d.safety) para('Safety, crowd management and accessibility arrangements: ' + d.safety);
+      if (d.additional) para('Additional notes: ' + d.additional);
+      para('This proposal has been checked against the event guidelines, and all ' + results.length + ' checks have been met.');
+      para('I assure you that the event will be conducted in line with college rules and discipline. I kindly request you to grant permission to conduct the event.');
+      L.push('Thanking you,', 'Yours faithfully,', '', '', '(' + d.coordinator + ')', { t: '(' + d.faculty + ')', x: 320, back: true }, 'Student Coordinator', { t: 'Faculty Coordinator (Recommended)', x: 320, back: true }, d.organizer, '', { t: "Principal's decision:   Approved  /  Not approved        Signature: ____________        Date: ____________", s: 9 });
+      return L;
+    }
+    $('download-pdf').addEventListener('click', () => {
+      if (!verificationPassed || !latestEvent) { toast('The letter is locked until all checks pass.'); return; }
+      const d = latestEvent, blob = createSimplePdf(buildLetter(d, latestResults)), url = URL.createObjectURL(blob), a = document.createElement('a');
+      a.href = url; a.download = (d.eventName || 'event').trim().replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').toLowerCase() + '-proposal-letter.pdf'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); toast('Proposal letter downloaded.');
+    });
+    $('print-report').addEventListener('click', () => { if (!latestResults.length) return; window.print() });
+    async function loadGuidelineDocuments() {
+      try {
+        const res = await fetch(apiUrl('/api/documents'));
+        if (res.ok) {
+          const data = await res.json();
+          renderGuidelineDocuments(data.items || []);
+        }
+      } catch (e) {}
+    }
+
+    function renderGuidelineDocuments(docs) {
+      const badge = $('doc-count-badge');
+      if (badge) badge.textContent = `${docs.length} document${docs.length === 1 ? '' : 's'}`;
+      const box = $('file-list');
+      if (!box) return;
+      if (!docs.length) {
+        box.innerHTML = '<div class="tiny" style="color:var(--muted);text-align:center;padding:12px 0;">No guideline documents loaded on the server.<br>Upload your college guidelines PDF above to verify proposals.</div>';
+        return;
+      }
+      box.innerHTML = docs.map(d => `
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;background:#f8faff;border:1px solid #e2e8f5;border-radius:9px;margin-bottom:8px">
+          <div style="min-width:0;flex:1">
+            <div style="font-weight:700;font-size:12px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">▤ ${esc(d.filename)}</div>
+            <div class="tiny" style="color:var(--muted);margin-top:3px">${d.size_kb} KB · ${d.chunks} chunk${d.chunks === 1 ? '' : 's'} indexed · <span style="color:var(--green);font-weight:700">${esc(d.status)}</span></div>
+          </div>
+          <button class="btn subtle" data-deldoc="${esc(d.filename)}" style="padding:4px 8px;font-size:10px;color:var(--red);border-color:#f0cfcf;" title="Delete document">Delete</button>
+        </div>
+      `).join('');
+    }
+
+    $('file-list').addEventListener('click', async e => {
+      const btn = e.target.closest('[data-deldoc]');
+      if (!btn) return;
+      const fn = btn.dataset.deldoc;
+      if (!confirm(`Delete "${fn}" from backend guidelines?`)) return;
+      btn.disabled = true;
+      try {
+        const res = await fetch(apiUrl('/api/documents/' + encodeURIComponent(fn)), { method: 'DELETE' });
+        if (res.ok) {
+          toast(`Deleted ${fn}`);
+          loadGuidelineDocuments();
+        } else {
+          toast('Delete failed: HTTP ' + res.status);
+          btn.disabled = false;
+        }
+      } catch (err) {
+        toast('Delete failed: ' + err.message);
+        btn.disabled = false;
+      }
+    });
+
+    $('guideline-files').addEventListener('change', async e => {
+      const files = [...e.target.files];
+      if (!files.length) return;
+      const fd = new FormData();
+      files.forEach(f => fd.append('files', f));
+      $('file-list').innerHTML = '<div class="tiny" style="color:var(--muted);text-align:center;padding:12px 0;">Uploading and indexing document(s)…</div>';
+      try {
+        const res = await fetch(apiUrl('/api/documents'), { method: 'POST', body: fd });
+        if (res.ok) {
+          const data = await res.json();
+          toast(`Uploaded and indexed ${data.saved ? data.saved.length : files.length} document(s) successfully!`);
+          renderGuidelineDocuments(data.items || []);
+          $('guideline-files').value = '';
+        } else {
+          const err = await res.json().catch(() => ({}));
+          toast(err.detail || 'Upload failed: HTTP ' + res.status);
+          loadGuidelineDocuments();
+        }
+      } catch (err) {
+        toast('Upload failed: ' + err.message);
+        loadGuidelineDocuments();
+      }
+    });
+    document.querySelectorAll('[data-scroll]').forEach(btn => btn.addEventListener('click', () => { showPage('verify'); document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n === btn)); setTimeout(() => document.getElementById(btn.dataset.scroll)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0) }));
+    /* ---- pages, events, chat ---- */
+    const EK = 'campusEvents', titles = { overview: 'Overview', verify: 'Verification', add: 'Add Event', events: 'My Events', chat: 'AI Assistant' };
+    let events = [], currentEventId = null;
+    try { events = JSON.parse(localStorage.getItem(EK)) || [] } catch (e) { }
+    const persist = () => { try { localStorage.setItem(EK, JSON.stringify(events)) } catch (e) { toast('Could not save events in this browser.') } };
+    const apiUrl = p => $('apiBase').value.trim().replace(/\/+$/, '') + p;
+    function showPage(p) { document.querySelectorAll('.page').forEach(x => x.classList.toggle('active', x.id === 'page-' + p)); document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.page === p)); $('crumb-title').textContent = titles[p]; window.scrollTo(0, 0); if (p === 'events') renderEvents(); if (p === 'verify') loadGuidelineDocuments(); }
+    document.addEventListener('click', e => { const b = e.target.closest('[data-page]'); if (b) showPage(b.dataset.page) });
+    loadGuidelineDocuments();
+    function renderEvents() {
+      const box = $('event-list'); if (!events.length) { box.innerHTML = '<div class="empty-state"><div class="big">▦</div><h4>No events yet</h4><p>Add an event brief to see it here.</p><br><button class="btn primary" data-page="add">＋ Add event</button></div>'; return }
+      box.innerHTML = events.slice().reverse().map(ev => `<div class="ev-card"><div><h4>${esc(ev.eventName)}</h4><div class="tiny">${[ev.eventType, ev.eventDate, ev.venue, ev.participants ? ev.participants + ' participants' : ''].filter(Boolean).map(esc).join(' · ')}</div></div><div class="ev-btns"><span class="badge ${ev.status}">${ev.status === 'needs-work' ? 'Needs work' : ev.status === 'verified' ? 'Verified' : 'Draft'}</span><button class="btn primary" data-verify="${esc(ev.id)}">Verify</button><button class="btn" data-del="${esc(ev.id)}">Delete</button></div></div>`).join('')
+    }
+    $('event-list').addEventListener('click', e => {
+      const v = e.target.closest('[data-verify]'), d = e.target.closest('[data-del]');
+      if (v) { const ev = events.find(x => x.id === v.dataset.verify); if (!ev) return; $('planning-form').reset(); Object.entries(ev).forEach(([k, val]) => { const el = $(k); if (el && el.form === $('planning-form')) el.value = val }); currentEventId = ev.id; showPage('verify'); runVerify() }
+      if (d) { if (d.dataset.armed) { events = events.filter(x => x.id !== d.dataset.del); persist(); renderEvents(); toast('Event deleted.') } else { d.dataset.armed = 1; d.textContent = 'Confirm delete'; setTimeout(() => { d.textContent = 'Delete'; delete d.dataset.armed }, 3000) } }
+    });
+    async function saveEvent() {
+      const f = $('add-form'); if (!f.reportValidity()) return; const d = {}; new FormData(f).forEach((v, k) => d[k] = String(v).trim());
+      const ev = { ...d, id: crypto.randomUUID ? crypto.randomUUID() : 'ev-' + Date.now(), status: 'draft' }; events.push(ev); persist();
+      if ($('api-state').textContent.includes('Connected')) { try { await fetch(apiUrl('/api/events'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: d.eventName, category: d.eventType, description: d.description, organizer: d.organizer, faculty_coordinator: d.faculty, proposed_date: d.eventDate, start_time: d.startTime, end_time: d.endTime, preferred_venue: d.venue, expected_attendance: Number(d.participants), budget_estimate: Number(d.budget) }) }) } catch (err) { } }
+      f.reset(); toast('Event saved to My Events.'); showPage('events')
+    }
+    $('save-event').addEventListener('click', saveEvent);
+    const _core = renderResults; renderResults = function (r) { _core(r); const ev = events.find(x => x.id === currentEventId); if (ev) { ev.status = verificationPassed ? 'verified' : 'needs-work'; persist() } };
+    $('reset-form').addEventListener('click', () => { currentEventId = null });
+    function addMsg(role, text) { const m = document.createElement('div'); m.className = 'msg' + (role === 'me' ? ' me' : ''); m.innerHTML = '<i>' + (role === 'me' ? 'You' : 'AI') + '</i><p></p>'; m.querySelector('p').textContent = text; $('chat-msgs').append(m); $('chat-msgs').scrollTop = 1e9; return m }
+    function demoReply(q) { q = q.toLowerCase(); if (q.includes('venue')) return 'Demo guidance: note the expected attendance, date, duration, equipment and setup needs, then confirm availability, capacity and booking steps with the venue owner.'; if (q.includes('approv') || q.includes('permission')) return 'Demo guidance: identify who must approve the event (faculty coordinator, department, administration) and request approval before announcing. Confirm the exact process in the official guidelines.'; if (q.includes('budget')) return 'Demo guidance: list costs for materials, equipment, printing and guests, and check spending limits in the official guidelines.'; return 'Demo guidance: prepare the event purpose, organizer, faculty coordinator, date and time, venue, expected attendance, budget, equipment and a safety plan. Then use Verification to check them.' }
+    async function ask(q) {
+      addMsg('me', q); const t = addMsg('ai', 'Preparing response…'); let ans = null;
+      try { const r = await fetch(apiUrl('/api/chat'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: q, event_id: currentEventId }) }); if (r.ok) { const d = await r.json(); const a = d.answer ?? d.response ?? d.message ?? d.result; if (typeof a === 'string') ans = a } } catch (err) { }
+      t.querySelector('p').textContent = ans || demoReply(q) + '\n\n(Demo reply: backend /api/chat not reached.)'
+    }
+    const sendChat = () => { const q = $('chat-input').value.trim(); if (!q) return; $('chat-input').value = ''; ask(q) };
+    $('chat-send').addEventListener('click', sendChat); $('chat-input').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat() } });
+    document.querySelector('.chips').addEventListener('click', e => { const b = e.target.closest('[data-q]'); if (b) ask(b.dataset.q) });
+  </script>
+</body>
+
+</html>
